@@ -14,6 +14,32 @@ int server_start() {
 	int sock_fd;
 	struct sockaddr_in server_addr;
     int flags;
+
+    server_addr.sin_family = AF_INET; // 协议族是IPV4协议
+    server_addr.sin_port = htons(PORT); // 将主机的无符号短整形数转换成网络字节顺序
+    server_addr.sin_addr.s_addr = inet_addr(HOST); // 用inet_addr函数将字符串host转为int型
+
+    sock_fd = socket(AF_INET, SOCK_STREAM, 0);
+
+    flags = fcntl(sock_fd, F_GETFL, 0);
+    flags |= O_NONBLOCK; //设置成非阻塞
+
+    if(fcntl(sock_fd, F_SETFL, flags)) {
+        perror("set_flag_error");
+        exit(1);
+    }
+
+    if (bind(sock_fd, (struct sockaddr *) &server_addr, sizeof(server_addr)) == -1) {
+        perror("bind_error");
+        exit(1);
+    }
+
+    if (listen(sock_fd, REQUEST_QUEUE_LENGTH) == -1) {
+        perror("listen error");
+        exit(1);
+    }
+
+    return sock_fd;
 }
 
 int main() {
