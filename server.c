@@ -60,6 +60,13 @@ void epoll_register(int epoll_fd, int fd, int state) {
     epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &event);
 }
 
+void epoll_cancel(int epoll_fd, int fd, int state) {
+    struct epoll_event event;
+    event.events = state;
+    event.data.fd = fd;
+    epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, &event);
+}
+
 int main() {
     int i;
     int event_num;

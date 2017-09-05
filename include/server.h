@@ -4,3 +4,5 @@
 int server_start();
 
 void epoll_register(int epoll_fd, int fd, int state);
+
+void epoll_cancel(int epoll_fd, int fd, int state);
