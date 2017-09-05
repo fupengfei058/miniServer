@@ -47,6 +47,11 @@ int server_start() {
 
 /**
  * 注册epoll事件
+ * 
+ * @param epoll_fd epoll句柄
+ * @param fd 	   socket句柄
+ * @param state    监听状态
+ *
  */
 void epoll_register(int epoll_fd, int fd, int state) {
     struct epoll_event event;
