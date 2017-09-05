@@ -10,6 +10,12 @@
 #include <sys/epoll.h>
 #include <fcntl.h>
 
+int server_start() {
+	int sock_fd;
+	struct sockaddr_in server_addr;
+    int flags;
+}
+
 int main() {
     int i;
     int event_num;
