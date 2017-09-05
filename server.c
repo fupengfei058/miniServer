@@ -10,6 +10,9 @@
 #include <sys/epoll.h>
 #include <fcntl.h>
 
+/**
+ * 创建套接字描述符
+ */
 int server_start() {
 	int sock_fd;
 	struct sockaddr_in server_addr;
@@ -40,6 +43,16 @@ int server_start() {
     }
 
     return sock_fd;
+}
+
+/**
+ * 注册epoll事件
+ */
+void epoll_register(int epoll_fd, int fd, int state) {
+    struct epoll_event event;
+    event.events = state;
+    event.data.fd = fd;
+    epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &event);
 }
 
 int main() {
