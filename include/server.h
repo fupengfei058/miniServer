@@ -2,3 +2,5 @@
 #define MAX_EVENTS 256
 
 int server_start();
+
+void epoll_register(int epoll_fd, int fd, int state);
