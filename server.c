@@ -156,6 +156,10 @@ char *create_json(struct request *cgi_request) {
     return json;
 }
 
+char *exec_php(char *args) {
+	
+}
+
 int main() {
     int i;
     int event_num;
