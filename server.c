@@ -133,6 +133,14 @@ char *deal_request(char *request_content, int client_fd) {
 }
 
 /**
+ * request
+ *
+ */
+void parse_request() {
+
+}
+
+/**
  * 构建request
  *
  */
