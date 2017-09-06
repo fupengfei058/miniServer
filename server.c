@@ -132,6 +132,14 @@ char *deal_request(char *request_content, int client_fd) {
     return response_json;
 }
 
+/**
+ * 构建request
+ *
+ */
+char *create_json(struct request *cgi_request) {
+
+}
+
 int main() {
     int i;
     int event_num;
