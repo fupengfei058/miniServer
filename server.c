@@ -162,7 +162,20 @@ char *create_json(struct request *cgi_request) {
  * @param args
  */
 char *exec_php(char *args) {
-
+	char command[BUFF_SIZE] = "php index.php ";
+	FILE *fp;
+	static char buff[BUFF_SIZE];
+	char line[BUFF_SIZE];
+	strcat(command, args);
+	memset(buff, 0, BUFF_SIZE);
+	if((fp = popen(command, "r")) == NULL) {
+		strcpy(buff, "服务器内部错误");
+	} else {
+		while (fgets(line, BUFF_SIZE, fp) != NULL) {
+			strcat(buff, line);
+		}
+	}
+	return buff;
 }
 
 int main() {
