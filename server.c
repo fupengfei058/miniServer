@@ -74,6 +74,47 @@ void epoll_cancel(int epoll_fd, int fd, int state) {
     epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, &event);
 }
 
+/**
+ * 处理客户端连接
+ *
+ * @param server_fd
+ * @param epoll_fd
+ */
+void accept_client(int server_fd, int epoll_fd) {
+	int client_fd;
+	struct sockaddr_in client_addr;
+    socklen_t len_client_addr = sizeof(client_addr);
+    client_fd = accept(server_fd, (struct sockaddr *) &client_addr, &len_client_addr);
+    epoll_register(epoll_fd, client_fd, EPOLLIN);
+}
+
+/**
+ * 处理客户端请求
+ *
+ * @param client_fd
+ * @param epoll_fd
+ */
+void deal_client(int client_fd, int epoll_fd) {
+	char *response_content;
+	char http_request[BUFF_SIZE], response_header[BUFF_SIZE], http_response[BUFF_SIZE];
+	memset(http_request, 0, BUFF_SIZE);
+	recv(client_fd, http_request, BUFF_SIZE, 0);
+
+	if (strlen(http_request) == 0) {
+        epoll_cancel(epoll_fd, client_fd, EPOLLIN);
+        return;
+    }
+
+    response_content = deal_request(http_request, client_fd);
+    sprintf(response_header, header_tmpl, strlen(response_content));
+    sprintf(http_response, "%s%s", response_header, response_content);
+    send(client_fd, http_response, sizeof(http_response), 0);
+}
+
+char *deal_request() {
+
+}
+
 int main() {
     int i;
     int event_num;
