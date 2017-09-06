@@ -137,7 +137,9 @@ char *deal_request(char *request_content, int client_fd) {
  *
  */
 char *create_json(struct request *cgi_request) {
-
+	cJSON *root;
+    root = cJSON_CreateObject();
+    
 }
 
 int main() {
