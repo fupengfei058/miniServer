@@ -139,7 +139,21 @@ char *deal_request(char *request_content, int client_fd) {
 char *create_json(struct request *cgi_request) {
 	cJSON *root;
     root = cJSON_CreateObject();
-    
+
+    cJSON_AddStringToObject(root, "REQUEST_METHOD", cgi_request->REQUEST_METHOD);
+    cJSON_AddStringToObject(root, "SCRIPT_NAME", cgi_request->SCRIPT_NAME);
+    cJSON_AddStringToObject(root, "SERVER_PROTOCOL", cgi_request->SERVER_PROTOCOL);
+    cJSON_AddStringToObject(root, "SERVER_NAME", cgi_request->SERVER_NAME);
+    cJSON_AddStringToObject(root, "QUERY_STRING", cgi_request->QUERY_STRING);
+    cJSON_AddStringToObject(root, "REMOTE_ADDR", cgi_request->REMOTE_ADDR);
+    cJSON_AddStringToObject(root, "CONTENT_TYPE", cgi_request->CONTENT_TYPE);
+    cJSON_AddStringToObject(root, "POST_DATA", cgi_request->POST_DATA);
+    cJSON_AddNumberToObject(root, "SERVER_PORT", cgi_request->SERVER_PORT);
+    cJSON_AddNumberToObject(root, "CONTENT_LENGTH", cgi_request->CONTENT_LENGTH);
+
+    char *json = cJSON_PrintUnformatted(root);
+    cJSON_Delete(root);
+    return json;
 }
 
 int main() {
