@@ -1,7 +1,17 @@
+#define PORT 8080
+#define HOST "127.0.0.1"
 #define FD_SIZE 1024
 #define MAX_EVENTS 256
 #define BUFF_SIZE 1024
+#define REQUEST_QUEUE_LENGTH 10
 
+char *header_tmpl = "HTTP/1.1 200 OK\r\n"
+        "Server: ZBS's Server V1.0\r\n"
+        "Accept-Ranges: bytes\r\n"
+        "Content-Length: %d\r\n"
+        "Connection: close\r\n"
+        "Content-Type: text/html\r\n\r\n";
+        
 int server_start();
 
 void epoll_register(int epoll_fd, int fd, int state);
