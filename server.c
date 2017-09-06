@@ -111,8 +111,25 @@ void deal_client(int client_fd, int epoll_fd) {
     send(client_fd, http_response, sizeof(http_response), 0);
 }
 
-char *deal_request() {
+/**
+ * 处理请求参数
+ *
+ * @param request_content
+ * @param client_fd
+ */
+char *deal_request(char *request_content, int client_fd) {
+	struct sockaddr_in client_addr;
+	socklen_t len_client_addr = sizeof(client_addr);
+    struct request cgi_request;
+    parse_request(request_content, &cgi_request);
+    cgi_request.SERVER_PORT = PORT;
+    getpeername(client_fd, (struct sockaddr *) &client_addr, &len_client_addr); //获取对方地址
+    inet_ntop(AF_INET, &client_addr.sin_addr, cgi_request.REMOTE_ADDR, sizeof(cgi_request.REMOTE_ADDR)); //将网络字节序二进制值转换成点分十进制串
+    char *request_json = create_json(&cgi_request);
+    char *response_json = exec_php(request_json);
 
+    // todo parse json and build http_response
+    return response_json;
 }
 
 int main() {

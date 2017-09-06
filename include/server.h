@@ -11,3 +11,5 @@ void epoll_cancel(int epoll_fd, int fd, int state);
 void accept_client(int server_fd, int epoll_fd);
 
 void deal_client(int client_fd, int epoll_fd);
+
+char *deal_request(char *request_content, int client_fd);
