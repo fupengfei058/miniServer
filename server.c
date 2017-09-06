@@ -157,6 +157,14 @@ char *create_json(struct request *cgi_request) {
 }
 
 /**
+ * response
+ *
+ */
+void parse_json() {
+
+}
+
+/**
  * 执行PHP脚本
  *
  * @param args
