@@ -140,6 +140,10 @@ void parse_request() {
 
 }
 
+void parse_line() {
+
+}
+
 char *create_json(struct request *cgi_request) {
 	cJSON *root;
     root = cJSON_CreateObject();
