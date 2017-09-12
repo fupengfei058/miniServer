@@ -164,8 +164,14 @@ char *create_json(struct request *cgi_request) {
  * response
  *
  */
-void parse_json() {
+void parse_json(char *response_json, struct response *cgi_response) {
+    cJSON *json = cJSON_Parse(response_json);
 
+    cgi_response.CONTENT_TYPE = cJSON_GetObjectItem(cJSON, "CONTENT_TYPE");
+    cgi_response.HTTP_CODE = cJSON_GetObjectItem(cJSON, "HTTP_CODE");
+    cgi_response.RESPONSE_CONTENT = cJSON_GetObjectItem(cJSON, "RESPONSE_CONTENT");
+
+    return;
 }
 
 /**
