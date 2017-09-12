@@ -136,11 +136,11 @@ char *deal_request(char *request_content, int client_fd) {
  * request
  *
  */
-void parse_request() {
+void parse_request(char *http_request, struct request *cgi_request) {
 
 }
 
-void parse_line() {
+void parse_line(char *line, struct request *header) {
 
 }
 
