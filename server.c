@@ -140,7 +140,7 @@ void parse_request(char *http_request, struct request *cgi_request) {
 
 }
 
-void parse_line(char *line, struct request *header) {
+void parse_line(char *line, struct request *cgi_request) {
 
 }
 

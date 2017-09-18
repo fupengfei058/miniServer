@@ -41,6 +41,6 @@ char *create_json(struct request *cgi_request);
 
 char *exec_php(char *args);
 
-void parse_line(char *line, struct request *header);
+void parse_line(char *line, struct request *cgi_request);
 
 void parse_request(char *http_request, struct request *cgi_request);
