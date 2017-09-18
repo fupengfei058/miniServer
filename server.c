@@ -137,7 +137,34 @@ char *deal_request(char *request_content, int client_fd) {
  *
  */
 void parse_request(char *http_request, struct request *cgi_request) {
+	char request_str[2048];
+    char top_body[2048];
+    int header_len;
+    char *delimiter = "\n";
+    char *line;
 
+    strcpy(request_str, http_request);
+
+    line = strtok(http_request, delimiter);
+    sscanf(line, "%s%s%s", cgi_request->REQUEST_METHOD, top_body, cgi_request->SERVER_PROTOCOL);
+
+    memset(cgi_request->SCRIPT_NAME, 0, strlen(cgi_request->SCRIPT_NAME));
+    for (int i = 0; i < strlen(top_body); i++) {
+        if (top_body[i] == '?') {
+            strncpy(cgi_request->SCRIPT_NAME, top_body, i);
+            strncpy(cgi_request->QUERY_STRING, top_body + i + 1, strlen(top_body) - i);
+            break;
+        }
+    }
+
+    if (0 == strlen(cgi_request->SCRIPT_NAME)) {
+        strcpy(cgi_request->SCRIPT_NAME, top_body);
+        memset(cgi_request->QUERY_STRING, 0, strlen(cgi_request->QUERY_STRING));
+    }
+
+    while ((line = strtok(NULL, delimiter))) {
+        parse_line(line, cgi_request);
+    }
 }
 
 void parse_line(char *line, struct request *cgi_request) {
