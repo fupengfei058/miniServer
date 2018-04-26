@@ -275,7 +275,7 @@ char *exec_php(char *request_json) {
         perror("connect error");
         exit(1);
     }
-    str_len = read(sock, response, );
+    str_len = read(sock, response, ); //todo
     if(-1 == str_len){
         perror("connect error");
         exit(1);
