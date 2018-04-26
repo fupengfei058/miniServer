@@ -1,4 +1,4 @@
-#include "fastcgi.h"
+#include "./include/fastcgi.h"
 /*
  * 构造请求头部，返回FCGI_Header结构体
  */
