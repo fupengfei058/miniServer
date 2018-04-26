@@ -252,21 +252,35 @@ void parse_json(char *response_json, struct response *cgi_response) {
  *
  * @param args
  */
-char *exec_php(char *args) {
-	char command[BUFF_SIZE] = "php index.php ";
-	FILE *fp;
-	static char buff[BUFF_SIZE];
-	char line[BUFF_SIZE];
-	strcat(command, args);
-	memset(buff, 0, BUFF_SIZE);
-	if((fp = popen(command, "r")) == NULL) {
-		strcpy(buff, "服务器内部错误");
-	} else {
-		while (fgets(line, BUFF_SIZE, fp) != NULL) {
-			strcat(buff, line);
-		}
-	}
-	return buff;
+char *exec_php(char *request_json) {
+	int sock;
+    struct sockaddr_in serv_addr;
+    int str_len;
+    char *response;
+
+    // 创建套接字
+    sock = socket(PF_INET, SOCK_STREAM, 0);
+    if(-1 == sock){
+        perror("socket error");
+        exit(1);
+    }
+
+    memset(&serv_addr, 0, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = inet_addr(FCGI_HOST);
+    serv_addr.sin_port = htons(FCGI_PORT);
+
+    // 连接服务器
+    if(-1 == connect(sock, (struct sockaddr *) &serv_addr, sizeof(serv_addr))){
+        perror("connect error");
+        exit(1);
+    }
+    str_len = read(sock, response, );
+    if(-1 == str_len){
+        perror("connect error");
+        exit(1);
+    }
+    close(sock);
 }
 
 int main() {

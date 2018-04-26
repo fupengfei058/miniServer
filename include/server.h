@@ -4,6 +4,8 @@
 #define MAX_EVENTS 256
 #define BUFF_SIZE 1024
 #define REQUEST_QUEUE_LENGTH 10
+#define FCGI_HOST "127.0.0.1"
+#define FCGI_PORT 9000      // php-fpm监听的端口地址
 
 char *header_tmpl = "HTTP/1.1 200 OK\r\n"
         "Server: ZBS's Server V1.0\r\n"
