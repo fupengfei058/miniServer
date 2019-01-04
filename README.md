@@ -4,5 +4,4 @@
 gcc server.c cJSON.c -o server
 ```
 #### todo:
-* 向fpm发起请求
-* 向http客户端返回结果
+* HTTP response
